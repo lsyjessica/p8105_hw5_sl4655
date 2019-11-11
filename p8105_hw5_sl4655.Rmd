@@ -192,6 +192,7 @@ p_reject <- sim_results %>%
 
 p_all + p_reject
 ```
+
 ###### Comments
 
 It seems like the sample average of β̂ 1 across tests for which the null is rejected does not equal to the true value of β1, especially when the true values of β1 is small. With a large variance of 50, the simulated data has a wide range. Therefore, without those tested values that are not rejected by the null, the sample average of β̂1 tends to be bigger than the true value of β1.
