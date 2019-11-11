@@ -60,48 +60,6 @@ Problem 2
 * Start with a dataframe containing all file names; the list.files function will help
 * Iterate over file names and read in data for each subject using purrr::map and saving the result as a new variable in the dataframe
 * Tidy the result; manipulate file names to include control arm and subject ID, make sure weekly observations are “tidy”, and do any other tidying that’s necessary
-<<<<<<< HEAD
-=======
-
-Make a spaghetti plot showing observations on each subject over time, and comment on differences between groups.
-
-```{r read_files}
-## create dataset
-df_study <- tibble(name_file = list.files(path = "./data")) %>% ## read files' names
-  mutate(name_path = paste("./data/", name_file, sep = ""), ## create files's paths
-         data_study = map(name_path, ~read.csv(.x))) %>% ## read files
-  unnest(cols = data_study) %>%
-  separate(data = ., col = name_file, into = c("arm", "id","type")) %>%
-  select(-c(type, name_path)) %>%
-  pivot_longer(cols = week_1:week_8,
-               names_to = "week",
-               names_prefix = "week_",
-               values_to = "value") %>%
-  mutate(arm = factor(arm, levels = c("con", "exp"), labels = c("Control", "Experiment")),
-         id = as.factor(id),
-         week = as.factor(week))
-
-## Create spaghetti plot
-ggplot(data = df_study, mapping = aes(x = week, y = value, color = id, group = id)) + 
-  geom_point(alpha = .5) +
-  geom_line() +
-  facet_grid( ~ arm) +
-  labs(
-    title = "Changes of Values throughout Weeks for Subjects within Groups",
-    x = "Week",
-    y = "Value"
-  ) + 
-  viridis::scale_color_viridis(
-    name = "ID", 
-    discrete = TRUE
-  ) + 
-  theme(legend.position = "bottom")
-```
-
-#### Comments
-
-According to the figure above, there are relatively no changes for eight weeks among subjects in the control arm. Yet, there is an obvious increase for every subject from week one to week eight in the experiment arm.
->>>>>>> 4c6ef437d70b2e3824194ac9409e04a693b3e5d8
 
 Make a spaghetti plot showing observations on each subject over time, and comment on differences between groups.
 
